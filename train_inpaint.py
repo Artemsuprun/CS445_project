@@ -1,10 +1,10 @@
 # needed libraries
 import torch
 import torch.nn as nn
-from torch.utils.data import DataLoader, TensorDataset
-import torchvision.datasets as dsets
+from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 from mlp import MLP
+from setup import setup_train
 
 
 # Training the model
@@ -26,30 +26,18 @@ def train(model, train, opt, epoch):
 
 
 def main():
-    # Get the MNIST dataset
-    train_MNIST = dsets.MNIST(root='./data', train=True, transform=transforms.ToTensor(), download=True)
-
-    train_input = []
-    train_target = []
-    for img, _ in train_MNIST:
-       input_img = img.clone()
-       target_img = img.clone()
-       train_input.append(input_img)
-       train_target.append(target_img)
-    train_input = torch.stack(train_input)
-    train_target = torch.stack(train_target)
-
-    train_set = TensorDataset(train_input, train_target)
+    # get the training set from MNIST
+    train_set = setup_train("MNIST")
 
     # Model setup and training
     input = 28*28
     output = 28*28
-    hidden_layers = [input/2, input/8, input/16, output/8, output/2]
+    hidden_layers = [input/2, input/4, input/16, output/4, output/2]
     model = MLP(input, hidden_layers, output, 'relu')
     model.cuda()
 
     lr = 0.001
-    batch_size = 30
+    batch_size = 10
     num_epoch = 50
 
     opt = torch.optim.Adam(model.parameters(), lr=lr)

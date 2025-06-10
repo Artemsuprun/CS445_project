@@ -1,9 +1,9 @@
 import torch
 import torch.nn as nn
 from mlp import MLP
-import torchvision.datasets as dsets
+from setup import setup_test
 import torchvision.transforms as transforms
-from torch.utils.data import DataLoader, TensorDataset
+from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
 
 
@@ -63,23 +63,12 @@ def main():
     input = 28*28
     output = 28*28
 
-    hidden_layers = [input/2, input/8, input/16, output/8, output/2]
+    hidden_layers = [input/2, input/4, input/16, output/4, output/2]
     model = MLP(input, hidden_layers, output, 'relu').cuda()
     model.load_state_dict(torch.load('./savedModel.pth'))
 
-    test_MNIST = dsets.MNIST(root='./data', train=False, transform=transforms.ToTensor(), download=True)
-    
-    test_input = []
-    test_target = []
-    for img, _ in test_MNIST:
-       input_img = img.clone()
-       target_img = img.clone()
-       test_input.append(input_img)
-       test_target.append(target_img)
-    test_input = torch.stack(test_input)
-    test_target = torch.stack(test_target)
+    test_set = setup_test("MNIST")
 
-    test_set = TensorDataset(test_input, test_target)
     test_loader = DataLoader(dataset=test_set, batch_size=batch_size, shuffle=True)
 
     sample, target, inputs = test(model, test_loader, nn.MSELoss())
