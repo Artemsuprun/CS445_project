@@ -44,7 +44,7 @@ def main():
     # Model setup and training
     input = 28*28
     output = 28*28
-    hidden_layers = [input/2, output/50, output/2]
+    hidden_layers = [input/2, input/8, input/16, output/8, output/2]
     model = MLP(input, hidden_layers, output, 'relu')
     model.cuda()
 

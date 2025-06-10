@@ -63,7 +63,7 @@ def main():
     input = 28*28
     output = 28*28
 
-    hidden_layers = [input/2, output/50, output/2]
+    hidden_layers = [input/2, input/8, input/16, output/8, output/2]
     model = MLP(input, hidden_layers, output, 'relu').cuda()
     model.load_state_dict(torch.load('./savedModel.pth'))
 
