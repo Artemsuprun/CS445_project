@@ -11,7 +11,7 @@ from setup import setup_train
 # Training the model
 def train(model, train, opt, epoch):
     transform = v2.Compose([
-        v2.GaussianNoise(0.4, 0.4)
+        v2.GaussianNoise(0.3, 0.3)
     ])
     for e in range(epoch):
         for images, targets in train:
@@ -28,7 +28,7 @@ def train(model, train, opt, epoch):
 
 def main():
     # get the training set from MNIST
-    train_set = setup_train("MNIST")
+    train_set = setup_train("FMNIST")
 
     # Model setup and training
     input = 28*28
@@ -39,7 +39,7 @@ def main():
 
     lr = 0.001
     batch_size = 30
-    num_epoch = 30
+    num_epoch = 100
 
     opt = torch.optim.Adam(model.parameters(), lr=lr)
     train_loader = DataLoader(dataset=train_set, batch_size=batch_size, shuffle=True)

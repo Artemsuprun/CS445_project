@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 def test(model, test, loss_func):
     transform = v2.Compose([
-        v2.GaussianNoise(0.3, 0.3)
+        v2.GaussianNoise(0.2, 0.2)
     ])
     error = 0.0
     for images, targets in test:
@@ -68,7 +68,7 @@ def main():
     model = MLP(input, hidden_layers, output, 'relu').cuda()
     model.load_state_dict(torch.load('./savedModel.pth'))
 
-    test_set = setup_test("MNIST")
+    test_set = setup_test("FMNIST")
 
     test_loader = DataLoader(dataset=test_set, batch_size=batch_size, shuffle=True)
 
