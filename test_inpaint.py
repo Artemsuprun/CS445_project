@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 def test(model, test, loss_func):
     transform = transforms.Compose([
-        transforms.RandomErasing(1, (0.1, 0.4))
+        transforms.RandomErasing(1, (0.2, 0.35))
     ])
     error = 0.0
     for images, targets in test:
@@ -63,7 +63,7 @@ def main():
     input = 28*28
     output = 28*28
 
-    hidden_layers = [input/2, input/4, input/16, output/4, output/2]
+    hidden_layers = [input/2, input/3, input/10, output/3, output/2]
     model = MLP(input, hidden_layers, output, 'relu').cuda()
     model.load_state_dict(torch.load('./savedModel.pth'))
 

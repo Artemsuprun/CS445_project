@@ -10,7 +10,7 @@ from setup import setup_train
 # Training the model
 def train(model, train, opt, epoch):
     transform = transforms.Compose([
-        transforms.RandomErasing(1, (0.1, 0.4))
+        transforms.RandomErasing(1, (0.2, 0.4))
     ])
     for e in range(epoch):
         for images, targets in train:
@@ -32,13 +32,13 @@ def main():
     # Model setup and training
     input = 28*28
     output = 28*28
-    hidden_layers = [input/2, input/4, input/16, output/4, output/2]
+    hidden_layers = [input/2, input/3, input/10, output/3, output/2]
     model = MLP(input, hidden_layers, output, 'relu')
     model.cuda()
 
     lr = 0.001
-    batch_size = 10
-    num_epoch = 50
+    batch_size = 30
+    num_epoch = 100
 
     opt = torch.optim.Adam(model.parameters(), lr=lr)
     train_loader = DataLoader(dataset=train_set, batch_size=batch_size, shuffle=True)
