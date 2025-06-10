@@ -11,7 +11,7 @@ from setup import setup_train
 # Training the model
 def train(model, train, opt, epoch):
     transform = v2.Compose([
-        v2.GaussianNoise()
+        v2.GaussianNoise(0.4, 0.4)
     ])
     for e in range(epoch):
         for images, targets in train:
@@ -39,7 +39,7 @@ def main():
 
     lr = 0.001
     batch_size = 30
-    num_epoch = 100
+    num_epoch = 30
 
     opt = torch.optim.Adam(model.parameters(), lr=lr)
     train_loader = DataLoader(dataset=train_set, batch_size=batch_size, shuffle=True)
