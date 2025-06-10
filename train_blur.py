@@ -38,7 +38,7 @@ def main():
 
     lr = 0.001
     batch_size = 30
-    num_epoch = 100
+    num_epoch = 50
 
     opt = torch.optim.Adam(model.parameters(), lr=lr)
     train_loader = DataLoader(dataset=train_set, batch_size=batch_size, shuffle=True)
